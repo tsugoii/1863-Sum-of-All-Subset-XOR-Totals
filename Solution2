@@ -1,0 +1,31 @@
+class Solution {
+    public int subsetXORSum(int[] nums) {
+        int sumOfOR = 0;
+        int n = nums.length;
+
+        /*
+         * Iterate through each number in the input array.
+         * Perform a bitwise OR operation between the current number 'num'
+         * and the 'sumOfOR'. The result is stored back in 'sumOfOR'.
+         * This operation ensures that if a bit is set (1) in any of the numbers,
+         * it will also be set in 'sumOfOR'. After this loop, 'sumOfOR' will
+         * have '1's in all bit positions that are set in at least one of the numbers.
+         */
+        for (int num : nums) {
+            sumOfOR |= num;
+        }
+
+        /*
+         * The sum of the XOR sums of all subsets is equal to the bitwise OR
+         * of all elements multiplied by 2^(n-1).
+         * For each bit position that is set in at least one number in 'nums'
+         * (meaning it's set in 'sumOfOR'), that bit will contribute to the XOR sum
+         * of exactly half of the 2^n total subsets (which is 2^(n-1) subsets).
+         * When we sum the XOR sums of all these subsets, for each such bit position,
+         * we are effectively adding the value of that bit 2^(n-1) times.
+         * Multiplying 'sumOfOR' by 2^(n-1) achieves this.
+         * (1 << (n - 1)) is a bitwise left shift operation that efficiently calculates 2 raised to the power of (n - 1).
+         */
+        return sumOfOR * (1 << (n - 1));
+    }
+}
